@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Challenge: Not Bad</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .input-section {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            display: none; /* Hidden by default */
+        }
+        .result.show {
+            display: block; /* Shown when class 'show' is added */
+        }
+        .original {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .output {
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .highlight {
+            color: #667eea;
+        }
+        .examples {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border: 2px solid #ffc107;
+        }
+        .examples h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        .example-item {
+            margin: 10px 0;
+            color: #856404;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Daily Challenge: Not Bad</h1>
+        
+        <div class="input-section">
+            <label>Enter a sentence:</label>
+            <input type="text" id="sentenceInput" value="The movie is not that bad, I like it" placeholder="Enter sentence with 'not' and 'bad'...">
+            <button onclick="checkNotBad()">Check & Replace</button>
+        </div>
+
+        <div id="result" class="result">
+            <div class="original">Original: <span id="originalText"></span></div>
+            <div class="output">Result: <span id="outputText" class="highlight"></span></div>
+        </div>
+
+        <div class="examples">
+            <h3>📋 Examples:</h3>
+            <div class="example-item">'This dinner is not that bad ! You cook well' → 'This dinner is good ! You cook well'</div>
+            <div class="example-item">'This movie is not so bad !' → 'This movie is good !'</div>
+            <div class="example-item">'This dinner is bad !' → 'This dinner is bad !' (no change)</div>
+        </div>
+    </div>
+
+    <script>
+        function checkNotBad() {
+            let sentence = document.getElementById('sentenceInput').value;
+            
+            if (!sentence.trim()) {
+                sentence = "The movie is not that bad, I like it";
+            }
+
+            const wordNot = sentence.indexOf("not");
+            const wordBad = sentence.indexOf("bad");
+
+            let result;
+
+            if (wordNot !== -1 && wordBad !== -1 && wordBad > wordNot) {
+                const beforeNot = sentence.substring(0, wordNot);
+                const afterBad = sentence.substring(wordBad + 3);
+                
+                result = beforeNot + "good" + afterBad;
+            } else {
+                result = sentence;
+            }
+
+            document.getElementById('originalText').textContent = sentence;
+            document.getElementById('outputText').textContent = result;
+            
+            // Use classList instead of inline style
+            document.getElementById('result').classList.add('show');
+
+            console.log("Original:", sentence);
+            console.log("Position of 'not':", wordNot);
+            console.log("Position of 'bad':", wordBad);
+            console.log("Result:", result);
+        }
+
+        window.onload = checkNotBad;
+    </script>
+</body>
+</html>

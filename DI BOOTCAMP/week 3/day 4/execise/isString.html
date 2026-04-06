@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 3: Is it a String?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; text-align: center; }
+        .test-case {
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .true { background: #d4edda; color: #155724; }
+        .false { background: #f8d7da; color: #721c24; }
+        .value {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+        .badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .true .badge { background: #28a745; color: white; }
+        .false .badge { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Is it a String?</h1>
+        <div id="tests"></div>
+    </div>
+
+    <script>
+        // Arrow function that checks if value is a string
+        const isString = (value) => typeof value === 'string';
+
+        // Test cases
+        const tests = [
+            { value: 'hello', expected: true },
+            { value: [1, 2, 4, 0], expected: false },
+            { value: '123', expected: true },
+            { value: 123, expected: false },
+            { value: '', expected: true },
+            { value: null, expected: false },
+            { value: undefined, expected: false },
+            { value: 'Hello World', expected: true }
+        ];
+
+        const container = document.getElementById('tests');
+
+        tests.forEach(test => {
+            const result = isString(test.value);
+            const div = document.createElement('div');
+            div.className = `test-case ${result}`;
+            
+            const valueStr = typeof test.value === 'string' ? `'${test.value}'` : JSON.stringify(test.value);
+            
+            div.innerHTML = `
+                <span class="value">isString(${valueStr})</span>
+                <span class="badge">${result}</span>
+            `;
+            
+            container.appendChild(div);
+            
+            // Console.log as per example
+            console.log(`isString(${valueStr}):`, result);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 5: Family</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise 5: Family</h1>
+    <div id="output"></div>
+
+    <script>
+        let output = "";
+
+        // Create family object
+        const family = {
+            father: "John",
+            mother: "Jane",
+            son: "Billy",
+            daughter: "Sally",
+            pet: "Max"
+        };
+
+        // Console.log the keys using for in loop
+        output += "Keys:\n";
+        for (let key in family) {
+            output += key + "\n";
+        }
+
+        // Console.log the values using for in loop
+        output += "\nValues:\n";
+        for (let key in family) {
+            output += family[key] + "\n";
+        }
+
+        document.getElementById('output').textContent = output;
+        console.log(output);
+    </script>
+</body>
+</html>

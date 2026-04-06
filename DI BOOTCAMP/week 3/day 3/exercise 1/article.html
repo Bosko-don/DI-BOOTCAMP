@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1: Change the Article</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        article {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        h2 { 
+            color: #667eea; 
+            cursor: pointer;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+        h3 { 
+            color: #764ba2; 
+            cursor: pointer;
+            padding: 10px;
+        }
+        p {
+            line-height: 1.6;
+            color: #555;
+            transition: opacity 0.5s;
+        }
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .bold-text {
+            font-weight: bold;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <article>
+        <h1>Some Facts</h1>
+        <h2>The Chocolate</h2>
+        <h3>History of the chocolate</h3>
+        <p>Chocolate is made from tropical Theobroma cacao tree seeds. 
+        Its earliest use dates back to the Olmec civilization in Mesoamerica.</p>
+        <p>After the European discovery of the Americas, chocolate became 
+        very popular in the wider world, and its demand exploded.</p>
+        <p>Chocolate has since become a popular food product that millions enjoy every day, 
+        thanks to its unique, rich, and sweet taste.</p> 
+        <p>But what effect does eating chocolate have on our health?</p> 
+    </article>
+
+    <button id="boldBtn">Make Paragraphs Bold</button>
+
+    <script>
+        // 1. Retrieve the h1 and console.log it
+        const h1 = document.querySelector('h1');
+        console.log(h1);
+
+        // 2. Remove the last paragraph in the article
+        const article = document.querySelector('article');
+        const paragraphs = article.getElementsByTagName('p');
+        const lastParagraph = paragraphs[paragraphs.length - 1];
+        lastParagraph.remove();
+
+        // 3. Event listener: change h2 background to red when clicked
+        const h2 = document.querySelector('h2');
+        h2.addEventListener('click', function() {
+            h2.style.backgroundColor = 'red';
+        });
+
+        // 4. Event listener: hide h3 when clicked (display: none)
+        const h3 = document.querySelector('h3');
+        h3.addEventListener('click', function() {
+            h3.style.display = 'none';
+        });
+
+        // 5. Button to make all paragraphs bold
+        const boldBtn = document.getElementById('boldBtn');
+        boldBtn.addEventListener('click', function() {
+            const allParagraphs = document.querySelectorAll('p');
+            for (let p of allParagraphs) {
+                p.classList.toggle('bold-text');
+            }
+        });
+
+        // Bonus 1: Random font size on h1 hover (0 to 100px)
+        h1.addEventListener('mouseover', function() {
+            const randomSize = Math.floor(Math.random() * 101); // 0 to 100
+            h1.style.fontSize = randomSize + 'px';
+        });
+
+        // Bonus 2: Fade out on 2nd paragraph hover
+        const secondParagraph = paragraphs[1];
+        secondParagraph.addEventListener('mouseover', function() {
+            secondParagraph.classList.add('fade-out');
+        });
+    </script>
+
+</body>
+</html>

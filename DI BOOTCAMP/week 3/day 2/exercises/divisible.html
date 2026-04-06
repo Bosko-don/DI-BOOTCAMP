@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1: Divisible by 23</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise 1: Numbers Divisible by 23</h1>
+    <button onclick="displayNumbersDivisible()">Default (23)</button>
+    <button onclick="displayNumbersDivisible(3)">Divisor 3</button>
+    <button onclick="displayNumbersDivisible(45)">Divisor 45</button>
+    <div id="output"></div>
+
+    <script>
+        // Bonus: Added divisor parameter with default value 23
+        function displayNumbersDivisible(divisor = 23) {
+            let numbers = "";
+            let sum = 0;
+            
+            // Loop through numbers 0 to 500
+            for (let i = 0; i <= 500; i++) {
+                // Check if divisible by divisor
+                if (i % divisor === 0) {
+                    numbers += i + " ";
+                    sum += i;
+                }
+            }
+            
+            const output = `Divisible by ${divisor}:\n${numbers}\n\nSum: ${sum}`;
+            document.getElementById('output').textContent = output;
+            console.log(output);
+        }
+    </script>
+</body>
+</html>

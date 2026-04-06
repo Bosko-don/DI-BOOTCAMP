@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2: Move the Box</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #container {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            background: yellow;
+            margin: 20px auto;
+            border: 2px solid #333;
+        }
+        #animate {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: red;
+            left: 0;
+            top: 0;
+        }
+        button {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise 2: Move the Box</h1>
+    <p><button onclick="myMove()" id="moveBtn">Click Me</button></p>
+    <div id="container">
+        <div id="animate"></div>
+    </div>
+
+    <script>
+        function myMove() {
+            const animate = document.getElementById("animate");
+            const container = document.getElementById("container");
+            const button = document.getElementById("moveBtn");
+            
+            // Disable button during animation
+            button.disabled = true;
+            
+            let position = 0;
+            // Calculate the limit (container width - box width)
+            const limit = container.offsetWidth - animate.offsetWidth;
+            
+            // Move 1px every millisecond
+            const intervalId = setInterval(function() {
+                // Check if we reached the end
+                if (position >= limit) {
+                    clearInterval(intervalId);
+                    button.disabled = false;
+                    console.log("Animation complete!");
+                } else {
+                    position++;
+                    animate.style.left = position + "px";
+                }
+            }, 1);
+        }
+    </script>
+</body>
+</html>

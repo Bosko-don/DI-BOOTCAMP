@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 6: Fortune Teller</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+        }
+        .crystal-ball {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .crystal-ball::before {
+            content: '🔮';
+            font-size: 80px;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            opacity: 0.3;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .fortune {
+            font-size: 24px;
+            color: #764ba2;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        .highlight {
+            color: #f5576c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="crystal-ball">
+        <h1>✨ Your Fortune ✨</h1>
+        <div class="fortune" id="fortune"></div>
+    </div>
+
+    <script>
+        // Self invoking function with 4 arguments
+        (function(numChildren, partnerName, geographicLocation, jobTitle) {
+            const sentence = `You will be a <span class="highlight">${jobTitle}</span> in <span class="highlight">${geographicLocation}</span>, and married to <span class="highlight">${partnerName}</span> with <span class="highlight">${numChildren}</span> kids.`;
+            
+            // Display in the DOM
+            document.getElementById('fortune').innerHTML = sentence;
+            
+            console.log("Fortune:", sentence);
+        })(2, 'Alex', 'Paris', 'Software Engineer');
+    </script>
+</body>
+</html>

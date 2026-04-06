@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Challenge: Todo List</title>
+    <!-- Font Awesome for the X button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #667eea;
+        }
+
+        button[type="submit"] {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .listTasks {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .task-item:hover {
+            background: #e9ecef;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-btn:hover {
+            background: #ee5a5a;
+        }
+
+        .task-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .task-label {
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* BONUS I: Done task styling */
+        .task-item.done .task-label {
+            text-decoration: line-through;
+            color: #ff6b6b;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #888;
+            padding: 30px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Todo List</h1>
+        
+        <!-- Form with input and submit button -->
+        <form id="todo-form">
+            <input type="text" id="task-input" placeholder="Enter a new task..." required>
+            <button type="submit">Submit</button>
+        </form>
+        
+        <!-- Empty div for tasks -->
+        <div class="listTasks"></div>
+    </div>
+
+    <script>
+        // BONUS I: Array of task objects (instead of simple strings)
+        const tasks = [];
+        let taskIdCounter = 0;
+
+        // DOM Elements
+        const form = document.getElementById('todo-form');
+        const taskInput = document.getElementById('task-input');
+        const listTasks = document.querySelector('.listTasks');
+
+        // Function to add a task
+        function addTask(event) {
+            event.preventDefault();
+            
+            const taskText = taskInput.value.trim();
+            
+            // Check that input is not empty
+            if (taskText === '') {
+                return;
+            }
+            
+            // BONUS I: Create task object
+            const task = {
+                task_id: taskIdCounter++,
+                text: taskText,
+                done: false
+            };
+            
+            // Add to array
+            tasks.push(task);
+            
+            // Add to DOM
+            renderTask(task);
+            
+            // Clear input
+            taskInput.value = '';
+        }
+
+        // Function to render a single task to the DOM
+        function renderTask(task) {
+            // Create task item container
+            const taskItem = document.createElement('div');
+            taskItem.className = 'task-item';
+            taskItem.setAttribute('data-task-id', task.task_id);
+            
+            // Create X button (Font Awesome)
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+            deleteBtn.onclick = function() {
+                deleteTask(task.task_id);
+            };
+            
+            // Create task content container (checkbox + label)
+            const taskContent = document.createElement('div');
+            taskContent.className = 'task-content';
+            
+            // Create checkbox
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `task-${task.task_id}`;
+            checkbox.onchange = function() {
+                doneTask(task.task_id);
+            };
+            
+            // Create label
+            const label = document.createElement('label');
+            label.className = 'task-label';
+            label.htmlFor = `task-${task.task_id}`;
+            label.textContent = task.text;
+            
+            // Assemble: X button (left) -> checkbox + label (right)
+            taskContent.appendChild(checkbox);
+            taskContent.appendChild(label);
+            
+            taskItem.appendChild(deleteBtn);
+            taskItem.appendChild(taskContent);
+            
+            listTasks.appendChild(taskItem);
+        }
+
+        // BONUS I: Function to mark task as done
+        function doneTask(taskId) {
+            // Find task in array
+            const task = tasks.find(t => t.task_id === taskId);
+            
+            if (task) {
+                // Toggle done property
+                task.done = !task.done;
+                
+                // Update DOM
+                const taskItem = document.querySelector(`[data-task-id="${taskId}"]`);
+                if (task.done) {
+                    taskItem.classList.add('done');
+                } else {
+                    taskItem.classList.remove('done');
+                }
+            }
+        }
+
+        // BONUS II: Function to delete task
+        function deleteTask(taskId) {
+            // Find index in array
+            const taskIndex = tasks.findIndex(t => t.task_id === taskId);
+            
+            if (taskIndex > -1) {
+                // Remove from array
+                tasks.splice(taskIndex, 1);
+                
+                // Remove from DOM
+                const taskItem = document.querySelector(`[data-task-id="${taskId}"]`);
+                if (taskItem) {
+                    taskItem.remove();
+                }
+            }
+        }
+
+        // Event listener for form submission
+        form.addEventListener('submit', addTask);
+    </script>
+</body>
+</html>

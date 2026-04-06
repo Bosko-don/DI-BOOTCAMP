@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 4: Find the Sum</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 { color: #333; margin-bottom: 30px; }
+        .code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .result {
+            font-size: 36px;
+            color: #11998e;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>➕ Find the Sum</h1>
+        <div class="code">const sum = (a, b) => a + b;</div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // One line arrow function
+        const sum = (a, b) => a + b;
+
+        // Test
+        const num1 = 5;
+        const num2 = 10;
+        const result = sum(num1, num2);
+
+        // Display
+        document.getElementById('result').textContent = `sum(${num1}, ${num2}) = ${result}`;
+        
+        console.log(sum(5, 10)); // 15
+    </script>
+</body>
+</html>

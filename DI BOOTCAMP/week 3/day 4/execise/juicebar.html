@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 8: Juice Bar</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        .part {
+            background: white;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .part h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .order {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 5px solid #28a745;
+        }
+        .order h3 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        .ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .ingredient {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧃 Juice Bar</h1>
+    
+    <div class="part">
+        <h2>Part I: Simple Order (3 ingredients)</h2>
+        <div id="part1"></div>
+    </div>
+    
+    <div class="part">
+        <h2>Part II: Complex Order (6 ingredients)</h2>
+        <div id="part2"></div>
+    </div>
+
+    <script>
+        // ==========================================
+        // PART I
+        // ==========================================
+        
+        function makeJuicePart1(size) {
+            function addIngredients(ing1, ing2, ing3) {
+                const container = document.getElementById('part1');
+                container.innerHTML = `
+                    <div class="order">
+                        <h3>Order #1</h3>
+                        <p>The client wants a <strong>${size}</strong> juice, containing:</p>
+                        <div class="ingredients">
+                            <span class="ingredient">${ing1}</span>
+                            <span class="ingredient">${ing2}</span>
+                            <span class="ingredient">${ing3}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Invoke inner function ONCE
+            addIngredients('apple', 'banana', 'orange');
+        }
+        
+        // Invoke outer function in global scope
+        makeJuicePart1('large');
+
+        // ==========================================
+        // PART II
+        // ==========================================
+        
+        function makeJuice(size) {
+            const ingredients = [];
+            
+            function addIngredients(ing1, ing2, ing3) {
+                ingredients.push(ing1, ing2, ing3);
+            }
+            
+            function displayJuice() {
+                const container = document.getElementById('part2');
+                const ingredientsHtml = ingredients.map(ing => 
+                    `<span class="ingredient">${ing}</span>`
+                ).join('');
+                
+                container.innerHTML = `
+                    <div class="order">
+                        <h3>Order #2</h3>
+                        <p>The client wants a <strong>${size}</strong> juice, containing:</p>
+                        <div class="ingredients">
+                            ${ingredientsHtml}
+                        </div>
+                        <p style="margin-top: 15px; color: #666;">
+                            <small>Total ingredients: ${ingredients.length}</small>
+                        </p>
+                    </div>
+                `;
+            }
+            
+            // Invoke addIngredients TWICE
+            addIngredients('apple', 'banana', 'orange');
+            addIngredients('spinach', 'ginger', 'lemon');
+            
+            // Invoke displayJuice ONCE
+            displayJuice();
+        }
+        
+        // Invoke makeJuice in global scope
+        makeJuice('medium');
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Volume of a Sphere</title> 
+        <style>  
+            body {
+                padding-top: 30px;
+                font-family: Arial, sans-serif;
+                max-width: 500px;
+                margin: 0 auto;
+                background: #f5f5f5;
+            } 
+            form {
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            label, input {
+                display: block;
+            }
+            label {
+                font-weight: bold;
+                margin-top: 15px;
+                color: #333;
+            }
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                margin-top: 5px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+            input[type="submit"] {
+                margin-top: 20px;
+                padding: 12px 30px;
+                background: #667eea;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            input[type="submit"]:hover {
+                background: #5568d3;
+            }
+            p {
+                text-align: center;
+                color: #666;
+            }
+        </style> 
+    </head> 
+    <body> 
+        <p>Input radius value and get the volume of a sphere.</p> 
+        <form id="MyForm"> 
+            <label for="radius">Radius</label>
+            <input type="text" name="radius" id="radius" required> 
+            <label for="volume">Volume</label>
+            <input type="text" name="volume" id="volume" readonly> 
+            <input type="submit" value="Calculate" id="submit">    
+        </form> 
+
+        <script>
+            // Get the form
+            const form = document.getElementById('MyForm');
+            
+            // Add submit event listener
+            form.addEventListener('submit', function(event) {
+                // Prevent default form submission
+                event.preventDefault();
+                
+                // Get radius value
+                const radiusInput = document.getElementById('radius');
+                const radius = parseFloat(radiusInput.value);
+                
+                // Validate input
+                if (isNaN(radius) || radius <= 0) {
+                    alert('Please enter a valid positive number for radius');
+                    return;
+                }
+                
+                // Calculate volume: V = 4/3 * π * r³
+                const volume = (4/3) * Math.PI * Math.pow(radius, 3);
+                
+                // Display result (rounded to 4 decimal places)
+                const volumeInput = document.getElementById('volume');
+                volumeInput.value = volume.toFixed(4);
+            });
+        </script>
+    </body> 
+</html>

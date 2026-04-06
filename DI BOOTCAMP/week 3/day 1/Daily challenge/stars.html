@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Challenge: Stars</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+        }
+        .container {
+            background: #16213e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #e94560;
+            margin-bottom: 30px;
+        }
+        .method {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #0f3460;
+            border-radius: 15px;
+            border-left: 5px solid #e94560;
+        }
+        .method h2 {
+            color: #eaeaea;
+            margin-bottom: 15px;
+        }
+        .output {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre;
+            font-size: 20px;
+            line-height: 1.5;
+            color: #ffd700;
+        }
+        button {
+            padding: 12px 24px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #c73e54;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⭐ Daily Challenge: Stars</h1>
+        
+        <div class="method">
+            <h2>Method 1: One Loop</h2>
+            <button onclick="starsOneLoop()">Run One Loop</button>
+            <div id="output1" class="output"></div>
+        </div>
+
+        <div class="method">
+            <h2>Method 2: Nested Loops</h2>
+            <button onclick="starsNestedLoops()">Run Nested Loops</button>
+            <div id="output2" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // Method 1: Using ONE loop
+        function starsOneLoop() {
+            let output = "";
+            let stars = "";
+            
+            for (let i = 1; i <= 6; i++) {
+                stars += "* ";
+                output += stars + "\n";
+            }
+            
+            document.getElementById('output1').textContent = output;
+            console.log("One Loop Method:\n" + output);
+        }
+
+        // Method 2: Using TWO nested for loops
+        function starsNestedLoops() {
+            let output = "";
+            
+            // Outer loop for each row (6 rows)
+            for (let i = 1; i <= 6; i++) {
+                let row = "";
+                
+                // Inner loop for stars in each row
+                for (let j = 1; j <= i; j++) {
+                    row += "* ";
+                }
+                
+                output += row + "\n";
+            }
+            
+            document.getElementById('output2').textContent = output;
+            console.log("Nested Loops Method:\n" + output);
+        }
+
+        // Run both on page load
+        window.onload = function() {
+            starsOneLoop();
+            starsNestedLoops();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 4: Vacation Costs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise 4: Vacation Costs</h1>
+    <button onclick="calculateVacation()">Calculate Vacation Cost</button>
+    <div id="output"></div>
+
+    <script>
+        // Bonus version: Using prompts in totalVacationCost, passing values to other functions
+
+        function hotelCost(nights) {
+            // $140 per night
+            return nights * 140;
+        }
+
+        function planeRideCost(destination) {
+            // Different prices based on destination
+            const prices = {
+                "London": 183,
+                "Paris": 220
+            };
+            return prices[destination] || 300; // Default $300 for other destinations
+        }
+
+        function rentalCarCost(days) {
+            // $40 per day, 5% discount if more than 10 days
+            let cost = days * 40;
+            if (days > 10) {
+                cost = cost * 0.95; // Apply 5% discount
+            }
+            return cost;
+        }
+
+        function totalVacationCost() {
+            // Get inputs via prompts
+            let nights = prompt("How many nights will you stay at the hotel?");
+            while (!nights || isNaN(nights) || nights <= 0) {
+                nights = prompt("Please enter a valid number of nights:");
+            }
+            
+            let destination = prompt("What is your destination?");
+            while (!destination || typeof destination !== "string" || destination.trim() === "") {
+                destination = prompt("Please enter a valid destination:");
+            }
+            
+            let carDays = prompt("How many days will you rent a car?");
+            while (!carDays || isNaN(carDays) || carDays <= 0) {
+                carDays = prompt("Please enter a valid number of days:");
+            }
+            
+            // Calculate costs by calling functions with prompt values
+            const hotel = hotelCost(Number(nights));
+            const plane = planeRideCost(destination.trim());
+            const car = rentalCarCost(Number(carDays));
+            const total = hotel + plane + car;
+            
+            const output = `The car cost: $${car.toFixed(2)}
+The hotel cost: $${hotel.toFixed(2)}
+The plane tickets cost: $${plane.toFixed(2)}
+Total vacation cost: $${total.toFixed(2)}`;
+            
+            document.getElementById('output').textContent = output;
+            console.log(output);
+        }
+
+        function calculateVacation() {
+            totalVacationCost();
+        }
+    </script>
+</body>
+</html>

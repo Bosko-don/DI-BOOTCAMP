@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1: Scope</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        .container {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        h1 { color: #e94560; }
+        .prediction {
+            background: #0f3460;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #e94560;
+            border-radius: 5px;
+        }
+        .code {
+            color: #ffd700;
+        }
+        button {
+            padding: 12px 24px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #0f3460;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Exercise 1: Scope</h1>
+        <button onclick="runFuncOne()">Run #1 funcOne()</button>
+        <button onclick="runFuncTwoThree()">Run #2 funcThree/funcTwo</button>
+        <button onclick="runFuncFourFive()">Run #3 funcFour/funcFive</button>
+        <button onclick="runFuncSix()">Run #4 funcSix()</button>
+        <button onclick="runIfBlock()">Run #5 If Block</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // ==========================================
+        // #1
+        // ==========================================
+        function funcOne() {
+            let a = 5;
+            if(a > 1) {
+                a = 3;
+            }
+            alert(`inside the funcOne function ${a}`);
+        }
+        // PREDICTION: a will be 3
+        // Explanation: a starts as 5, condition (5 > 1) is true, so a becomes 3
+
+        // #1.2 What will happen if the variable is declared with const instead of let?
+        // ANSWER: Error! TypeError: Assignment to constant variable.
+        // Cannot reassign a const variable with a = 3
+
+        // ==========================================
+        //#2
+        // ==========================================
+        let a2 = 0;
+        function funcTwo() {
+            a2 = 5;
+        }
+        function funcThree() {
+            alert(`inside the funcThree function ${a2}`);
+        }
+        // PREDICTION for funcThree() first call: 0 (initial value)
+        // PREDICTION for funcThree() second call: 5 (after funcTwo modified it)
+        // Explanation: a2 is in global scope, funcTwo modifies the global a2 to 5
+
+        // #2.2 What will happen if the variable is declared with const instead of let?
+        // ANSWER: Error! TypeError: Assignment to constant variable.
+        // funcTwo() tries to do a2 = 5 but a2 is const
+
+        // ==========================================
+        //#3
+        // ==========================================
+        function funcFour() {
+            window.a = "hello";
+        }
+        function funcFive() {
+            alert(`inside the funcFive function ${a}`);
+        }
+        // PREDICTION: "hello"
+        // Explanation: funcFour creates a global property window.a
+        // funcFive accesses the global variable a (window.a)
+
+        // ==========================================
+        //#4
+        // ==========================================
+        let a4 = 1;
+        function funcSix() {
+            let a4 = "test";
+            alert(`inside the funcSix function ${a4}`);
+        }
+        // PREDICTION: "test"
+        // Explanation: Function scope! The local a4 shadows the global a4.
+        // Alert shows the local variable "test", not the global 1.
+
+        // #4.2 What will happen if the variable is declared with const instead of let?
+        // ANSWER: It works the same! Both declarations are allowed because they're in different scopes.
+
+        // ==========================================
+        //#5
+        // ==========================================
+        // PREDICTION: First alert shows 5, second alert shows 2
+        // Explanation: let is block-scoped. The 'a' inside if{} is separate from the outer 'a'
+        let a5 = 2;
+        if (true) {
+            let a5 = 5;
+            alert(`in the if block ${a5}`);
+        }
+        alert(`outside of the if block ${a5}`);
+
+        // #5.2 What will happen if the variable is declared with const instead of let?
+        // ANSWER: Same behavior! Both const declarations work because they're in different block scopes.
+
+        // ==========================================
+        // Functions to run each example
+        // ==========================================
+        function runFuncOne() {
+            document.getElementById('output').textContent = 
+                "Prediction: a = 3\nCheck the alert that appeared!";
+            funcOne();
+        }
+
+        function runFuncTwoThree() {
+            document.getElementById('output').textContent = 
+                "Prediction: First 0, then 5\nCheck the alerts!";
+            funcThree(); // Shows 0
+            funcTwo();   // Changes a2 to 5
+            funcThree(); // Shows 5
+        }
+
+        function runFuncFourFive() {
+            document.getElementById('output').textContent = 
+                "Prediction: 'hello'\nCheck the alert!";
+            funcFour();
+            funcFive();
+        }
+
+        function runFuncSix() {
+            document.getElementById('output').textContent = 
+                "Prediction: 'test' (local shadows global)\nCheck the alert!";
+            funcSix();
+        }
+
+        function runIfBlock() {
+            document.getElementById('output').textContent = 
+                "Prediction: 5 inside if, 2 outside\nCheck the two alerts!";
+            // This runs automatically on load, but we can trigger it again
+            location.reload();
+        }
+    </script>
+</body>
+</html>

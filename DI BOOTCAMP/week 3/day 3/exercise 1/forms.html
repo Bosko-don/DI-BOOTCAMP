@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2: Work with Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background: #5568d3;
+        }
+        .usersAnswer {
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .usersAnswer li {
+            padding: 10px;
+            background: #e9ecef;
+            margin: 5px 0;
+            border-radius: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="userForm">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="firstname"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lastname"><br><br>
+        <input type="submit" value="Submit" id="submit">
+    </form> 
+
+    <ul class="usersAnswer"></ul>
+
+    <script>
+        // 1. Retrieve the form and console.log it
+        const form = document.getElementById('userForm');
+        console.log('Form:', form);
+
+        // 2. Retrieve inputs by their id and console.log them
+        const fnameInput = document.getElementById('fname');
+        const lnameInput = document.getElementById('lname');
+        console.log('First name by ID:', fnameInput);
+        console.log('Last name by ID:', lnameInput);
+
+        // 3. Retrieve inputs by their name attribute and console.log them
+        const fnameByName = document.getElementsByName('firstname')[0];
+        const lnameByName = document.getElementsByName('lastname')[0];
+        console.log('First name by name attribute:', fnameByName);
+        console.log('Last name by name attribute:', lnameByName);
+
+        // 4. Submit event listener
+        form.addEventListener('submit', function(event) {
+            // Prevent default form submission (prevents page reload)
+            event.preventDefault();
+            
+            // Get values
+            const firstName = fnameInput.value.trim();
+            const lastName = lnameInput.value.trim();
+            
+            // Make sure they are not empty
+            if (firstName === '' || lastName === '') {
+                alert('Please fill in both fields!');
+                return;
+            }
+            
+            // Get the ul
+            const usersAnswer = document.querySelector('.usersAnswer');
+            
+            // Clear previous entries
+            usersAnswer.innerHTML = '';
+            
+            // Create li for first name
+            const li1 = document.createElement('li');
+            li1.textContent = firstName;
+            
+            // Create li for last name
+            const li2 = document.createElement('li');
+            li2.textContent = lastName;
+            
+            // Append to ul
+            usersAnswer.appendChild(li1);
+            usersAnswer.appendChild(li2);
+        });
+    </script>
+
+</body>
+</html>

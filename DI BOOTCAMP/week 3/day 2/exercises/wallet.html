@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 3: What's in my wallet?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .test {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .true { color: green; font-weight: bold; }
+        .false { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Exercise 3: What's in my wallet?</h1>
+    <div id="output"></div>
+
+    <script>
+        function changeEnough(itemPrice, amountOfChange) {
+            // Coin values: quarters, dimes, nickels, pennies
+            const coinValues = [0.25, 0.10, 0.05, 0.01];
+            
+            let totalChange = 0;
+            
+            // Calculate total change
+            for (let i = 0; i < amountOfChange.length; i++) {
+                totalChange += amountOfChange[i] * coinValues[i];
+            }
+            
+            // Return true if can afford, false otherwise
+            return totalChange >= itemPrice;
+        }
+
+        // Run tests
+        const tests = [
+            { price: 4.25, change: [25, 20, 5, 0], expected: true },
+            { price: 14.11, change: [2, 100, 0, 0], expected: false },
+            { price: 0.75, change: [0, 0, 20, 5], expected: true }
+        ];
+
+        let output = "";
+        
+        for (let test of tests) {
+            const result = changeEnough(test.price, test.change);
+            const resultClass = result ? 'true' : 'false';
+            
+            output += `<div class="test">`;
+            output += `Item price: $${test.price}<br>`;
+            output += `Change: [${test.change.join(', ')}]<br>`;
+            output += `Result: <span class="${resultClass}">${result}</span> (expected: ${test.expected})<br>`;
+            
+            // Show calculation
+            const coinValues = [0.25, 0.10, 0.05, 0.01];
+            let total = 0;
+            for (let i = 0; i < test.change.length; i++) {
+                total += test.change[i] * coinValues[i];
+            }
+            output += `Total change: $${total.toFixed(2)}`;
+            output += `</div>`;
+        }
+
+        document.getElementById('output').innerHTML = output;
+        
+        // Console tests
+        console.log(changeEnough(4.25, [25, 20, 5, 0])); // true
+        console.log(changeEnough(14.11, [2, 100, 0, 0])); // false
+        console.log(changeEnough(0.75, [0, 0, 20, 5])); // true
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge: Create a solar system</title>
+    <style>
+        body {
+            background-color: black;
+            padding: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .listPlanets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .planet {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+        }
+        .moon {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgb(237, 237, 237);
+            border: 2px solid red;
+        }
+        /* Planet colors */
+        .mercury { background-color: #A5A5A5; }
+        .venus { background-color: #E3BB76; }
+        .earth { background-color: #6B93D6; }
+        .mars { background-color: #C1440E; }
+        .jupiter { background-color: #D8CA9D; }
+        .saturn { background-color: #EAD6B8; }
+        .uranus { background-color: #D1E7E7; }
+        .neptune { background-color: #5B5DDF; }
+    </style>
+</head>
+<body>
+
+    <section class="listPlanets"></section>
+
+    <script>
+        // Array of planet objects (Bonus: using objects to include moon count)
+        const planets = [
+            { name: "Mercury", class: "mercury", moons: 0 },
+            { name: "Venus", class: "venus", moons: 0 },
+            { name: "Earth", class: "earth", moons: 1 },
+            { name: "Mars", class: "mars", moons: 2 },
+            { name: "Jupiter", class: "jupiter", moons: 79 },
+            { name: "Saturn", class: "saturn", moons: 82 },
+            { name: "Uranus", class: "uranus", moons: 27 },
+            { name: "Neptune", class: "neptune", moons: 14 }
+        ];
+
+        // Get the section element
+        const section = document.querySelector(".listPlanets");
+
+        // Loop through each planet
+        for (let planet of planets) {
+            // Create div for planet
+            const planetDiv = document.createElement("div");
+            
+            // Add class "planet"
+            planetDiv.classList.add("planet");
+            
+            // Add specific class for background color
+            planetDiv.classList.add(planet.class);
+            
+            // Add planet name as text
+            planetDiv.textContent = planet.name;
+            
+            // Bonus: Create moons
+            // Display only first few moons for visual clarity (max 5)
+            const moonsToShow = Math.min(planet.moons, 5);
+            
+            for (let i = 0; i < moonsToShow; i++) {
+                const moonDiv = document.createElement("div");
+                moonDiv.classList.add("moon");
+                
+                // Position moons around the planet in a circle
+                const angle = (i / moonsToShow) * 2 * Math.PI;
+                const radius = 70; // Distance from planet center
+                const x = Math.cos(angle) * radius + 50 - 10; // 50 is half planet width, 10 is half moon width
+                const y = Math.sin(angle) * radius + 50 - 10;
+                
+                moonDiv.style.left = x + "px";
+                moonDiv.style.top = y + "px";
+                
+                // Add moon count indicator if there are more moons
+                if (i === moonsToShow - 1 && planet.moons > moonsToShow) {
+                    moonDiv.style.border = "2px solid yellow";
+                    moonDiv.title = `+${planet.moons - moonsToShow} more moons`;
+                }
+                
+                planetDiv.appendChild(moonDiv);
+            }
+            
+            // Show moon count if planet has moons
+            if (planet.moons > 0) {
+                const moonCount = document.createElement("span");
+                moonCount.style.position = "absolute";
+                moonCount.style.bottom = "-20px";
+                moonCount.style.fontSize = "10px";
+                moonCount.textContent = `${planet.moons} moons`;
+                planetDiv.appendChild(moonCount);
+            }
+            
+            // Append planet div to section
+            section.appendChild(planetDiv);
+        }
+    </script>
+</body>
+</html>

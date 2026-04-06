@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 5: Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        .student_list {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .university {
+            border-left: 5px solid #667eea;
+        }
+        .attendance {
+            border-right: 5px solid #667eea;
+        }
+        .highlight {
+            border: 2px solid red;
+            padding: 5px;
+        }
+        #container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">Users:</div>
+    <ul class="list">
+        <li>John</li>
+        <li>Pete</li>
+    </ul>
+    <ul class="list">
+        <li>David</li>
+        <li>Sarah</li>
+        <li>Dan</li>
+    </ul>
+
+    <script>
+        // 1. Retrieve the div and console.log it
+        const container = document.getElementById("container");
+        console.log(container);
+
+        // 2. Change "Pete" to "Richard"
+        const lists = document.querySelectorAll(".list");
+        const firstList = lists[0];
+        const secondList = lists[1];
+        
+        // Find and change Pete to Richard
+        const peteLi = firstList.getElementsByTagName("li")[1];
+        peteLi.textContent = "Richard";
+
+        // 3. Delete the second <li> of the second <ul> (Sarah)
+        secondList.removeChild(secondList.getElementsByTagName("li")[1]);
+
+        // 4. Change the name of the first <li> of each <ul> to your name
+        const allUls = document.querySelectorAll("ul");
+        for (let ul of allUls) {
+            ul.getElementsByTagName("li")[0].textContent = "YourName";
+        }
+
+        // 5. Add class "student_list" to both <ul>'s
+        for (let ul of allUls) {
+            ul.classList.add("student_list");
+        }
+
+        // 6. Add classes "university" and "attendance" to the first <ul>
+        firstList.classList.add("university", "attendance");
+
+        // 7. Add "light blue" background and padding to the <div>
+        container.style.backgroundColor = "lightblue";
+        container.style.padding = "20px";
+
+        // 8. Do not display the <li> that contains "Dan"
+        // Note: Dan was already deleted, but if we need to hide any remaining Dan:
+        const allLis = document.querySelectorAll("li");
+        for (let li of allLis) {
+            if (li.textContent === "Dan") {
+                li.style.display = "none";
+            }
+        }
+
+        // 9. Add border to the <li> that contains "Richard"
+        for (let li of allLis) {
+            if (li.textContent === "Richard") {
+                li.classList.add("highlight");
+            }
+        }
+
+        // 10. Change font size of the whole body
+        document.body.style.fontSize = "18px";
+
+        // Bonus: If background color is "lightblue", alert message
+        if (container.style.backgroundColor === "lightblue") {
+            // Get users from div (after our changes: YourName and Richard)
+            const users = [];
+            for (let ul of allUls) {
+                for (let li of ul.getElementsByTagName("li")) {
+                    if (li.style.display !== "none") {
+                        users.push(li.textContent);
+                    }
+                }
+            }
+            // alert("Hello " + users.join(" and "));
+            console.log("Bonus: Hello " + users.join(" and "));
+        }
+    </script>
+</body>
+</html>

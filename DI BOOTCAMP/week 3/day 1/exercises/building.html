@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 4: Building Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise 4: Building Management</h1>
+    <div id="output"></div>
+
+    <script>
+        let output = "";
+
+        const building = {
+            numberOfFloors: 4,
+            numberOfAptByFloor: {
+                firstFloor: 3,
+                secondFloor: 4,
+                thirdFloor: 9,
+                fourthFloor: 2,
+            },
+            nameOfTenants: ["Sarah", "Dan", "David"],
+            numberOfRoomsAndRent:  {
+                sarah: [3, 990],
+                dan:  [4, 1000],
+                david: [1, 500],
+            },
+        };
+
+        // 1. Console.log number of floors
+        output += `Number of floors: ${building.numberOfFloors}\n`;
+
+        // 2. Console.log apartments on floors 1 and 3
+        const floor1Apts = building.numberOfAptByFloor.firstFloor;
+        const floor3Apts = building.numberOfAptByFloor.thirdFloor;
+        output += `Apartments on floor 1: ${floor1Apts}\n`;
+        output += `Apartments on floor 3: ${floor3Apts}\n`;
+        output += `Total on floors 1 and 3: ${floor1Apts + floor3Apts}\n`;
+
+        // 3. Second tenant and their rooms
+        const secondTenant = building.nameOfTenants[1];
+        const secondTenantRooms = building.numberOfRoomsAndRent[secondTenant.toLowerCase()][0];
+        output += `Second tenant: ${secondTenant}\n`;
+        output += `Number of rooms: ${secondTenantRooms}\n`;
+
+        // 4. Check rent and increase if needed
+        const sarahRent = building.numberOfRoomsAndRent.sarah[1];
+        const davidRent = building.numberOfRoomsAndRent.david[1];
+        const danRent = building.numberOfRoomsAndRent.dan[1];
+        const sumSarahDavid = sarahRent + davidRent;
+
+        output += `\nSarah's rent: ${sarahRent}\n`;
+        output += `David's rent: ${davidRent}\n`;
+        output += `Sum of Sarah + David: ${sumSarahDavid}\n`;
+        output += `Dan's rent: ${danRent}\n`;
+
+        if (sumSarahDavid > danRent) {
+            building.numberOfRoomsAndRent.dan[1] = 1200;
+            output += `Sum is bigger than Dan's rent. Dan's rent increased to: ${building.numberOfRoomsAndRent.dan[1]}\n`;
+        } else {
+            output += `Sum is not bigger than Dan's rent. No change.\n`;
+        }
+
+        document.getElementById('output').textContent = output;
+        console.log(output);
+    </script>
+</body>
+</html>

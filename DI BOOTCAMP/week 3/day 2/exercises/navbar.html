@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 6: Change the Navbar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        #socialNetworkNavigation {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        #socialNetworkNavigation ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        #socialNetworkNavigation a {
+            color: white;
+            text-decoration: none;
+        }
+        #socialNetworkNavigation a:hover {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div id="navBar">
+        <ul>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">My Friends</a></li>
+            <li><a href="#">Messenger</a></li>
+            <li><a href="#">My Pics</a></li>
+        </ul>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        // 1. Change id from "navBar" to "socialNetworkNavigation"
+        const navBar = document.getElementById("navBar");
+        navBar.setAttribute("id", "socialNetworkNavigation");
+        
+        let output = "ID changed to: " + navBar.id + "\n\n";
+
+        // 2. Add new <li> with "Logout" to the <ul>
+        const ul = navBar.querySelector("ul");
+        
+        // Create new <li>
+        const newLi = document.createElement("li");
+        
+        // Create text node "Logout"
+        const logoutText = document.createTextNode("Logout");
+        
+        // Append text to <li>
+        newLi.appendChild(logoutText);
+        
+        // Append <li> to <ul>
+        ul.appendChild(newLi);
+        
+        output += "Added 'Logout' to the list\n\n";
+
+        // 3. Use firstElementChild and lastElementChild
+        const firstLi = ul.firstElementChild;
+        const lastLi = ul.lastElementChild;
+        
+        const firstLinkText = firstLi.textContent;
+        const lastLinkText = lastLi.textContent;
+        
+        output += "First <li> text: " + firstLinkText + "\n";
+        output += "Last <li> text: " + lastLinkText;
+        
+        document.getElementById("output").textContent = output;
+        
+        console.log("First link:", firstLinkText);
+        console.log("Last link:", lastLinkText);
+    </script>
+</body>
+</html>

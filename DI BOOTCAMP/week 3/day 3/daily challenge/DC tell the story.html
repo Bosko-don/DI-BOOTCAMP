@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge: Mad Libs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            width: calc(100% - 170px);
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        button {
+            padding: 12px 30px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        #lib-button {
+            background: #667eea;
+            color: white;
+        }
+        #lib-button:hover {
+            background: #5568d3;
+        }
+        #shuffle-button {
+            background: #28a745;
+            color: white;
+            display: none;
+        }
+        #shuffle-button:hover {
+            background: #218838;
+        }
+        #story-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: none;
+        }
+        #story-container.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        #story {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .highlight {
+            color: #667eea;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-left: 155px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Mad Libs</h1>
+
+    <form id="libform">
+        <label for="noun">Noun:</label>
+        <input type="text" id="noun"><br>
+        
+        <label for="adjective">Adjective:</label>
+        <input type="text" id="adjective"><br>
+        
+        <label for="person">Someone's Name:</label>
+        <input type="text" id="person"><br>
+        
+        <label for="verb">Verb:</label>
+        <input type="text" id="verb"><br>
+        
+        <label for="place">A place:</label>
+        <input type="text" id="place"><br>
+        
+        <button type="submit" id="lib-button">Lib it!</button>
+        <button type="button" id="shuffle-button">🎲 Shuffle Story</button>
+    </form>
+
+    <div id="story-container">
+        <p><strong>Generated story:</strong></p>
+        <p id="story"></p>
+    </div>
+
+    <script>
+        // Get form and inputs
+        const form = document.getElementById('libform');
+        const nounInput = document.getElementById('noun');
+        const adjectiveInput = document.getElementById('adjective');
+        const personInput = document.getElementById('person');
+        const verbInput = document.getElementById('verb');
+        const placeInput = document.getElementById('place');
+        const storyContainer = document.getElementById('story-container');
+        const storySpan = document.getElementById('story');
+        const shuffleButton = document.getElementById('shuffle-button');
+
+        // Store current values for shuffle
+        let currentValues = {};
+
+        // Array of story templates
+        const storyTemplates = [
+            (n, a, p, v, pl) => `Yesterday, <span class="highlight">${p}</span> went to the <span class="highlight">${pl}</span> and saw a <span class="highlight">${a}</span> <span class="highlight">${n}</span> trying to <span class="highlight">${v}</span>. It was the most ridiculous thing ever!`,
+            
+            (n, a, p, v, pl) => `Once upon a time, there was a <span class="highlight">${a}</span> <span class="highlight">${n}</span> named <span class="highlight">${p}</span> who loved to <span class="highlight">${v}</span> at the <span class="highlight">${pl}</span> every single day.`,
+            
+            (n, a, p, v, pl) => `<span class="highlight">${p}</span> decided to visit the <span class="highlight">${pl}</span> to find a <span class="highlight">${a}</span> <span class="highlight">${n}</span>. To everyone's surprise, it started to <span class="highlight">${v}</span> right in front of them!`,
+            
+            (n, a, p, v, pl) => `At the <span class="highlight">${pl}</span>, <span class="highlight">${p}</span> discovered a <span class="highlight">${a}</span> <span class="highlight">${n}</span> that could <span class="highlight">${v}</span> better than anyone else in the world.`,
+            
+            (n, a, p, v, pl) => `The <span class="highlight">${a}</span> adventure began when <span class="highlight">${p}</span> took their pet <span class="highlight">${n}</span> to <span class="highlight">${v}</span> at the <span class="highlight">${pl}</span>. What a day!`
+        ];
+
+        // Form submit event
+        form.addEventListener('submit', function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+            
+            // Get values
+            const noun = nounInput.value.trim();
+            const adjective = adjectiveInput.value.trim();
+            const person = personInput.value.trim();
+            const verb = verbInput.value.trim();
+            const place = placeInput.value.trim();
+            
+            // Check if values are not empty
+            if (!noun || !adjective || !person || !verb || !place) {
+                alert('Please fill in all fields!');
+                return;
+            }
+            
+            // Store values for shuffle
+            currentValues = { noun, adjective, person, verb, place };
+            
+            // Generate random story
+            generateRandomStory();
+            
+            // Show story container and shuffle button
+            storyContainer.classList.add('show');
+            shuffleButton.style.display = 'inline-block';
+        });
+
+        // Function to generate random story
+        function generateRandomStory() {
+            const { noun, adjective, person, verb, place } = currentValues;
+            
+            // Pick random template
+            const randomIndex = Math.floor(Math.random() * storyTemplates.length);
+            const story = storyTemplates[randomIndex](noun, adjective, person, verb, place);
+            
+            // Display story
+            storySpan.innerHTML = story;
+            
+            console.log('Story generated:', story);
+        }
+
+        // Shuffle button click
+        shuffleButton.addEventListener('click', function() {
+            generateRandomStory();
+        });
+
+        // Log to console when script loads
+        console.log('Mad Libs game loaded successfully!');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 3: Transform the Sentence</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        p {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            font-size: 20px;
+            line-height: 1.8;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        p:hover {
+            background-color: #f0f0f0;
+        }
+        strong {
+            transition: color 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <p id="myParagraph"><strong>Hello</strong> I hope you are enjoying <strong>this</strong> class. At the
+    <strong>end</strong> you <strong>will</strong> be great Developers!
+    <strong>Enjoy</strong> the <strong>JavaScript </strong> lessons</p>
+
+    <script>
+        // 1. Declare global variable
+        let allBoldItems;
+
+        // 2. Function to collect all bold items
+        function getBoldItems() {
+            allBoldItems = document.querySelectorAll('strong');
+            console.log('Bold items collected:', allBoldItems);
+        }
+
+        // 3. Function to highlight (change color to blue)
+        function highlight() {
+            for (let item of allBoldItems) {
+                item.style.color = 'blue';
+            }
+        }
+
+        // 4. Function to return to default (black)
+        function returnItemsToDefault() {
+            for (let item of allBoldItems) {
+                item.style.color = 'black';
+            }
+        }
+
+        // Initialize - get bold items when page loads
+        getBoldItems();
+
+        // 5. Add event listeners to the paragraph
+        const paragraph = document.getElementById('myParagraph');
+        
+        // Call highlight on mouseover
+        paragraph.addEventListener('mouseover', highlight);
+        
+        // Call returnItemsToDefault on mouseout
+        paragraph.addEventListener('mouseout', returnItemsToDefault);
+    </script>
+
+</body>
+</html>

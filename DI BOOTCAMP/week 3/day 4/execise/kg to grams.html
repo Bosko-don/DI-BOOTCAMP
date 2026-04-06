@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 5: Kg to Grams</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; text-align: center; }
+        .method {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        .method h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .result {
+            font-family: 'Courier New', monospace;
+            color: #28a745;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .note {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚖️ Kg to Grams Converter</h1>
+        
+        <div class="method">
+            <h3>1. Function Declaration</h3>
+            <div id="result1"></div>
+        </div>
+        
+        <div class="method">
+            <h3>2. Function Expression</h3>
+            <div id="result2"></div>
+        </div>
+        
+        <div class="method">
+            <h3>3. Arrow Function</h3>
+            <div id="result3"></div>
+        </div>
+        
+        <div class="note">
+            <strong>Difference:</strong> Function declarations are hoisted (can be called before defined), 
+            function expressions are not hoisted (must be defined before called).
+        </div>
+    </div>
+
+    <script>
+        // 1. Function declaration
+        function kgToGramsDeclaration(kg) {
+            return kg * 1000;
+        }
+
+        // 2. Function expression
+        const kgToGramsExpression = function(kg) {
+            return kg * 1000;
+        };
+
+        // 3. One line arrow function
+        const kgToGramsArrow = (kg) => kg * 1000;
+
+        // Invoke all three
+        const weight = 5;
+        
+        document.getElementById('result1').innerHTML = 
+            `<code>kgToGramsDeclaration(${weight})</code> = <span class="result">${kgToGramsDeclaration(weight)}g</span>`;
+        
+        document.getElementById('result2').innerHTML = 
+            `<code>kgToGramsExpression(${weight})</code> = <span class="result">${kgToGramsExpression(weight)}g</span>`;
+        
+        document.getElementById('result3').innerHTML = 
+            `<code>kgToGramsArrow(${weight})</code> = <span class="result">${kgToGramsArrow(weight)}g</span>`;
+
+        console.log("Declaration:", kgToGramsDeclaration(5));
+        console.log("Expression:", kgToGramsExpression(5));
+        console.log("Arrow:", kgToGramsArrow(5));
+    </script>
+</body>
+</html>

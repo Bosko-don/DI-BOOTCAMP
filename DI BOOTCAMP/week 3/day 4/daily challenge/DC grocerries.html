@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Challenge: Groceries</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        .section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .code {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .explanation {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: #856404;
+        }
+        .fruit-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .fruit {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .box {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .before {
+            background: #d4edda;
+            color: #155724;
+        }
+        .after {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 Daily Challenge: Groceries</h1>
+        
+        <div class="section">
+            <h3>Display Fruits (forEach)</h3>
+            <div class="fruit-list" id="fruitList"></div>
+            <div class="code" id="fruitConsole"></div>
+        </div>
+
+        <div class="section">
+            <h3>Clone Groceries - Pass by Value vs Pass by Reference</h3>
+            <button onclick="runCloneDemo()">Run Clone Demo</button>
+            <div id="cloneResults"></div>
+        </div>
+
+        <div class="section">
+            <h3>Key Concepts</h3>
+            <div class="explanation">
+                <strong>Pass by Value (Primitives):</strong> string, number, boolean, null, undefined, symbol<br>
+                When you copy a primitive value, you create a completely independent copy.<br><br>
+                
+                <strong>Pass by Reference (Objects):</strong> object, array, function<br>
+                When you copy an object, you copy the reference (memory address), not the actual object.<br>
+                Both variables point to the same object in memory!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initial data
+        let client = "John";
+
+        const groceries = {
+            fruits: ["pear", "apple", "banana"],
+            vegetables: ["tomatoes", "cucumber", "salad"],
+            totalPrice: "20$",
+            other: {
+                paid: true,
+                meansOfPayment: ["cash", "creditCard"]
+            }
+        };
+
+        // ==========================================
+        // displayGroceries - Arrow function with forEach
+        // ==========================================
+        const displayGroceries = () => {
+            const fruitList = document.getElementById('fruitList');
+            let consoleOutput = "Fruits:\n";
+            
+            groceries.fruits.forEach((fruit, index) => {
+                // Display on page
+                const fruitSpan = document.createElement('span');
+                fruitSpan.className = 'fruit';
+                fruitSpan.textContent = fruit;
+                fruitList.appendChild(fruitSpan);
+                
+                // For console
+                consoleOutput += `${index + 1}. ${fruit}\n`;
+            });
+            
+            document.getElementById('fruitConsole').textContent = consoleOutput;
+            console.log(consoleOutput);
+        };
+
+        // Call displayGroceries
+        displayGroceries();
+
+        // ==========================================
+        // cloneGroceries - Arrow function
+        // ==========================================
+        const cloneGroceries = () => {
+            let results = "";
+            
+            // 1. Create user as copy of client (PASS BY VALUE)
+            let user = client;
+            results += `<div class="code">let user = client;</div>`;
+            results += `<p><strong>Before change:</strong> client = "${client}", user = "${user}"</p>`;
+            
+            // Change client to "Betty"
+            client = "Betty";
+            results += `<p><strong>After client = "Betty":</strong> client = "${client}", user = "${user}"</p>`;
+            
+            results += `<div class="explanation">
+                <strong>Why user is still "John"?</strong><br>
+                Strings are primitives (PASS BY VALUE). When we did <code>let user = client</code>, 
+                we copied the VALUE "John" into user. They are now independent. 
+                Changing client doesn't affect user.
+            </div>`;
+            
+            // 2. Create shopping as copy of groceries (PASS BY REFERENCE)
+            let shopping = groceries;
+            results += `<div class="code">let shopping = groceries;</div>`;
+            
+            results += `<div class="comparison">
+                <div class="box before">
+                    <strong>Before Changes:</strong><br>
+                    totalPrice: ${groceries.totalPrice}<br>
+                    paid: ${groceries.other.paid}
+                </div>
+                <div class="box after">
+                    <strong>After Changes:</strong><br>
+                    Will be shown below ↓
+                </div>
+            </div>`;
+            
+            // Change totalPrice to "35$"
+            shopping.totalPrice = "35$";
+            results += `<p><strong>After shopping.totalPrice = "35$":</strong></p>`;
+            results += `<p>groceries.totalPrice = "${groceries.totalPrice}"</p>`;
+            results += `<p>shopping.totalPrice = "${shopping.totalPrice}"</p>`;
+            
+            results += `<div class="explanation">
+                <strong>Why did groceries also change?</strong><br>
+                Objects are PASS BY REFERENCE. <code>shopping</code> and <code>groceries</code> 
+                point to the SAME object in memory. Changing one changes both!
+            </div>`;
+            
+            // Change paid to false
+            shopping.other.paid = false;
+            results += `<p><strong>After shopping.other.paid = false:</strong></p>`;
+            results += `<p>groceries.other.paid = ${groceries.other.paid}</p>`;
+            results += `<p>shopping.other.paid = ${shopping.other.paid}</p>`;
+            
+            results += `<div class="explanation">
+                <strong>Why did this nested property also change?</strong><br>
+                The <code>other</code> object is also passed by reference. 
+                Both shopping.other and groceries.other point to the same nested object.
+            </div>`;
+            
+            document.getElementById('cloneResults').innerHTML = results;
+            
+            // Console logs
+            console.log("=== Clone Groceries Demo ===");
+            console.log("user:", user); // "John" (pass by value)
+            console.log("client:", client); // "Betty"
+            console.log("groceries.totalPrice:", groceries.totalPrice); // "35$"
+            console.log("shopping.totalPrice:", shopping.totalPrice); // "35$"
+            console.log("groceries.other.paid:", groceries.other.paid); // false
+            console.log("shopping.other.paid:", shopping.other.paid); // false
+        };
+
+        // Function to run the demo
+        function runCloneDemo() {
+            // Reset data first
+            client = "John";
+            groceries.totalPrice = "20$";
+            groceries.other.paid = true;
+            
+            cloneGroceries();
+        }
+    </script>
+</body>
+</html>

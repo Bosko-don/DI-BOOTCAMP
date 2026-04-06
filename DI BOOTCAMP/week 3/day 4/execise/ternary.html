@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2: Ternary Operator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 { color: #333; margin-bottom: 30px; }
+        .result {
+            font-size: 48px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .code {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>⚔️ Battle Result</h1>
+        <div class="result" id="result"></div>
+        <div class="code" id="code"></div>
+    </div>
+
+    <script>
+        // Transform winBattle() to arrow function
+        const winBattle = () => true;
+
+        // Create variable with ternary operator
+        const experiencePoints = winBattle() ? 10 : 1;
+
+        // Console.log the variable
+        console.log("winBattle():", winBattle());
+        console.log("experiencePoints:", experiencePoints);
+
+        // Display on page
+        document.getElementById('result').textContent = experiencePoints + " XP";
+
+        // Show the code
+        document.getElementById('code').innerHTML = 
+            `<span style="color: #667eea;">const</span> winBattle = () => <span style="color: #28a745;">true</span>;\n\n` +
+            `<span style="color: #667eea;">const</span> experiencePoints = winBattle() ? <span style="color: #dc3545;">10</span> : <span style="color: #dc3545;">1</span>;\n\n` +
+            `// Result: ${experiencePoints}`;
+    </script>
+</body>
+</html>

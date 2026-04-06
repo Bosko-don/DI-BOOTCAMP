@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1: List of People</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exercise 1: List of People</h1>
+    <div id="output"></div>
+
+    <script>
+        let output = "";
+
+        // Initial array
+        const people = ["Greg", "Mary", "Devon", "James"];
+        output += "Initial: " + people + "\n\n";
+
+        // Part I - Review about arrays
+
+        // 1. Remove "Greg"
+        people.shift();
+        output += "After removing Greg: " + people + "\n";
+
+        // 2. Replace "James" with "Jason"
+        const jamesIndex = people.indexOf("James");
+        people[jamesIndex] = "Jason";
+        output += "After replacing James with Jason: " + people + "\n";
+
+        // 3. Add my name to the end
+        people.push("YourName");
+        output += "After adding my name: " + people + "\n";
+
+        // 4. Console.log Mary's index
+        const maryIndex = people.indexOf("Mary");
+        output += "Mary's index: " + maryIndex + "\n";
+
+        // 5. Copy array using slice (exclude Mary and my name)
+        // Current: ["Mary", "Devon", "Jason", "YourName"]
+        // We want ["Devon", "Jason"] - indices 1 and 2
+        const peopleCopy = people.slice(1, 3);
+        output += "Copy (without Mary and my name): " + peopleCopy + "\n";
+
+        // 6. Index of "Foo"
+        const fooIndex = people.indexOf("Foo");
+        output += "Index of 'Foo': " + fooIndex + "\n";
+        output += "Why -1? Because 'Foo' is not found in the array.\n";
+
+        // 7. Last element
+        const last = people[people.length - 1];
+        output += "Last element: " + last + "\n";
+        output += "Relationship: last index = length - 1 (" + (people.length - 1) + " = " + people.length + " - 1)\n\n";
+
+        // Part II - Loops
+
+        // 1. Loop through and console.log each person
+        output += "All people:\n";
+        for (let i = 0; i < people.length; i++) {
+            output += people[i] + "\n";
+        }
+
+        // 2. Loop and exit after "Devon"
+        output += "\nLoop until Devon:\n";
+        for (let i = 0; i < people.length; i++) {
+            output += people[i] + "\n";
+            if (people[i] === "Devon") {
+                break;
+            }
+        }
+
+        document.getElementById('output').textContent = output;
+        console.log(output);
+    </script>
+</body>
+</html>
