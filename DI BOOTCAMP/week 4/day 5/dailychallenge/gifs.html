@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gif Fetcher</title>
+    <style>
+        .gif-container {
+            margin: 10px;
+            display: inline-block;
+        }
+        img {
+            max-width: 300px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form id="gifForm">
+        <input type="text" id="category" placeholder="Enter category (e.g. sun)" required>
+        <button type="submit">Fetch Gif</button>
+    </form>
+    <button id="deleteAll">DELETE ALL</button>
+    <div id="gifDisplay"></div>
+
+    <script>
+        const apiKey = 'hpvZycW22qCjn5cRM1xtWB8NKq4dQ2My';
+        const form = document.getElementById('gifForm');
+        const gifDisplay = document.getElementById('gifDisplay');
+        const deleteAllBtn = document.getElementById('deleteAll');
+
+        async function fetchRandomGif(category) {
+            const url = `https://api.giphy.com/v1/gifs/random?tag=${category}&api_key=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data.data;
+            } catch (error) {
+                console.error('Error fetching gif:', error);
+                throw error;
+            }
+        }
+
+        function createGifElement(gifData) {
+            const container = document.createElement('div');
+            container.className = 'gif-container';
+            
+            const img = document.createElement('img');
+            img.src = gifData.images.original.url;
+            img.alt = 'Random gif';
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'DELETE';
+            deleteBtn.onclick = function() {
+                container.remove();
+            };
+            
+            container.appendChild(img);
+            container.appendChild(deleteBtn);
+            
+            return container;
+        }
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const category = document.getElementById('category').value;
+            
+            try {
+                const gifData = await fetchRandomGif(category);
+                
+                if (gifData && gifData.images) {
+                    const gifElement = createGifElement(gifData);
+                    gifDisplay.appendChild(gifElement);
+                } else {
+                    alert('No gif found for this category');
+                }
+            } catch (error) {
+                alert('Failed to fetch gif. Please try again.');
+            }
+            
+            form.reset();
+        });
+
+        deleteAllBtn.addEventListener('click', function() {
+            gifDisplay.innerHTML = '';
+        });
+    </script>
+</body>
+</html>
