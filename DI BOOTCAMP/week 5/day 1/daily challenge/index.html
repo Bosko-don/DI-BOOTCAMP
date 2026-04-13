@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter Pro</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="converter-card">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h1>Currency Converter</h1>
+                <p class="subtitle">Real-time exchange rates powered by ExchangeRate-API</p>
+            </header>
+
+            <main>
+                <!-- Amount Input -->
+                <div class="input-group">
+                    <label for="amount">Amount</label>
+                    <div class="amount-input-wrapper">
+                        <span class="currency-symbol" id="fromSymbol">$</span>
+                        <input 
+                            type="number" 
+                            id="amount" 
+                            placeholder="Enter amount" 
+                            value="1" 
+                            min="0" 
+                            step="0.01"
+                        >
+                    </div>
+                </div>
+
+                <!-- Currency Selection -->
+                <div class="currency-row">
+                    <div class="currency-group">
+                        <label for="fromCurrency">From</label>
+                        <div class="select-wrapper">
+                            <select id="fromCurrency">
+                                <option value="" disabled selected>Loading currencies...</option>
+                            </select>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <!-- Switch Button -->
+                    <button id="switchBtn" class="switch-btn" title="Switch currencies">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+
+                    <div class="currency-group">
+                        <label for="toCurrency">To</label>
+                        <div class="select-wrapper">
+                            <select id="toCurrency">
+                                <option value="" disabled selected>Loading currencies...</option>
+                            </select>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Convert Button -->
+                <button id="convertBtn" class="convert-btn">
+                    <span class="btn-text">Convert Now</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="spinner hidden" id="btnSpinner">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                    </div>
+                </button>
+
+                <!-- Result Section -->
+                <div class="result-section hidden" id="resultSection">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <span class="result-label">Converted Amount</span>
+                            <span class="update-time" id="lastUpdated"></span>
+                        </div>
+                        <div class="result-amount">
+                            <span id="resultValue">0.00</span>
+                            <span id="resultCurrency" class="result-currency">USD</span>
+                        </div>
+                        <div class="exchange-rate">
+                            <i class="fas fa-info-circle"></i>
+                            <span id="rateInfo">1 USD = 1.00 USD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message hidden" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText">Something went wrong. Please try again.</span>
+                </div>
+            </main>
+
+            <footer>
+                <p>Get your free API key at <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
