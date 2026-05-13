@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <% if (posts.length === 0) { %>
+        <p>No posts found.</p>
+    <% } else { %>
+        <% posts.forEach(post => { %>
+            <div class="card post-card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="<%= post.link %>" target="_blank"><%= post.title %></a>
+                    </h5>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            Date: <%= post.pubDate %> | 
+                            Creator: <%= post.creator %> | 
+                            Category: <%= post.categories ? post.categories.join(', ') : 'N/A' %>
+                        </small>
+                    </p>
+                    <p class="card-text"><%= post.contentSnippet || post.content %></p>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+</div>

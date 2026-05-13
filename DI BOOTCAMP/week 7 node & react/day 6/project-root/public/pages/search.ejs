@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../partials/head', { title: 'Search Facts' }) %>
+<body>
+    <%- include('../partials/header') %>
+    
+    <div class="container mt-4">
+        <!-- Search by Title -->
+        <form action="/search/title" method="POST" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="title" class="form-control" placeholder="Search by title...">
+                <button type="submit" class="btn btn-primary">Search Title</button>
+            </div>
+        </form>
+
+        <!-- Search by Category -->
+        <form action="/search/category" method="POST">
+            <div class="input-group">
+                <select name="category" class="form-select">
+                    <option value="">Select category...</option>
+                    <option value="History">History</option>
+                    <option value="Science">Science</option>
+                    <option value="Nature">Nature</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search Category</button>
+            </div>
+        </form>
+    </div>
+
+    <%- include('../partials/posts') %>
+    <%- include('../partials/footer') %>
+</body>
+</html>
